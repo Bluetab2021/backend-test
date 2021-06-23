@@ -4,7 +4,7 @@
 import dotenv from "dotenv";
 
 import express, { Request, Response, Application } from "express";
-// import mongoose from 'mongoose';
+import mongoose from "mongoose";
 import cors from "cors";
 
 dotenv.config({
@@ -14,6 +14,20 @@ dotenv.config({
 //* ------------------ CONFIGURATION ------------------ *\\
 
 const app: Application = express();
+
+//* --------------- DATABASE CONNECTION --------------- *\\
+
+const uri = process.env.LOCAL_URI || "";
+mongoose
+  .connect(uri, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
+  .then(() => {
+    console.log("mongo database connection established successfully");
+  });
 
 //* ------------------- MIDDLEWARES ------------------- *\\
 
