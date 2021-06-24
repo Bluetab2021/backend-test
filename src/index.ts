@@ -13,11 +13,19 @@ dotenv.config({
 
 //* ------------------ CONFIGURATION ------------------ *\\
 
+const PROTOCOL: string = process.env.PROTOCOL || "http";
+const HOST: string = process.env.HOST || "localhost";
+const PORT: string = process.env.PORT || "3000";
+
 const app: Application = express();
 
 //* --------------- DATABASE CONNECTION --------------- *\\
 
-const uri = process.env.LOCAL_URI || "";
+const uri =
+  process.env.NODE_ENV === "production"
+    ? process.env.LOCAL_URI || ""
+    : process.env.ATLAS_URI || "";
+
 mongoose
   .connect(uri, {
     useNewUrlParser: true,
@@ -27,6 +35,9 @@ mongoose
   })
   .then(() => {
     console.log("mongo database connection established successfully");
+  })
+  .catch((error: Error) => {
+    console.error("error connecting to database: ", error);
   });
 
 //* ------------------- MIDDLEWARES ------------------- *\\
@@ -36,10 +47,14 @@ app.use(cors());
 
 //* --------------------- ROUTES ---------------------- *\\
 app.get("/", (_reg: Request, res: Response) => {
-  res.status(200).json({ message: "test server" });
+  res.status(200).json({ success: true, message: "test server" });
+});
+
+app.use((_req: Request, res: Response) => {
+  res.status(404).json({ success: false, message: "page not found" });
 });
 
 //* ------------------ START SERVER ------------------- *\\
-app.listen(3000, () => {
-  console.log(`server is running`);
+app.listen(PORT, () => {
+  console.log(`server listening on ${PROTOCOL}://${HOST}:${PORT}`);
 });
