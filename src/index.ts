@@ -7,6 +7,8 @@ import express, { Request, Response, Application } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
+import bookRouter from "./routes/book.routes";
+
 dotenv.config({
   path: "./config/index.env",
 });
@@ -46,6 +48,9 @@ app.use(express.json());
 app.use(cors());
 
 //* --------------------- ROUTES ---------------------- *\\
+
+app.use("/api", bookRouter);
+
 app.get("/", (_reg: Request, res: Response) => {
   res.status(200).json({ success: true, message: "test server" });
 });
