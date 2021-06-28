@@ -2,7 +2,12 @@
 
 import express, { Router } from "express";
 
-import { getBooksController } from "../controllers/book.controller";
+import {
+  getBooksController,
+  createBookController,
+} from "../controllers/book.controller";
+
+import { validCreateBook } from "../middlewares/book.middleware";
 
 //* ------------------ CONFIGURATION ------------------ *\\
 
@@ -11,6 +16,7 @@ const bookRouter: Router = express.Router();
 //* --------------------- ROUTES ---------------------- *\\
 
 bookRouter.get("/", getBooksController);
+bookRouter.post("/", validCreateBook, createBookController);
 
 //* --------------------- EXPORTS --------------------- *\\
 

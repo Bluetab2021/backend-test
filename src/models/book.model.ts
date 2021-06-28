@@ -10,23 +10,25 @@ interface IThumbnail {
 }
 
 export interface IBook extends Document {
+  isbn: string;
   title: string;
   authors: string[];
   published: Date;
   subtitle: string;
   rating: number;
-  thumbnails: IThumbnail[];
+  thumbnail: IThumbnail;
   description: string;
 }
 
 const BookSchema: Schema = new Schema(
   {
+    isbn: { type: String, required: true, trim: true },
     title: { type: String, required: true, trim: true },
     authors: { type: Array, required: true },
     published: { type: Date, required: true },
     subtitle: { type: String },
     rating: { type: Number, required: true },
-    thumbnails: {
+    thumbnail: {
       url: { type: String, required: true },
       title: { type: String, required: true },
     },
