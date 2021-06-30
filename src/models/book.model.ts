@@ -22,7 +22,7 @@ export interface IBook extends Document {
 
 const BookSchema: Schema = new Schema(
   {
-    isbn: { type: String, required: true, trim: true },
+    isbn: { type: String, required: true, trim: true, unique: true },
     title: { type: String, required: true, trim: true },
     authors: { type: Array, required: true },
     published: { type: Date, required: true },

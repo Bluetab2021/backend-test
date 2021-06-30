@@ -21,12 +21,10 @@ const validCreateBook = [
   }),
 
   check("authors", "authors field is required").notEmpty(),
-  check("published", "published field is required").notEmpty(), // .isDate(),
+  check("published", "published field is required").notEmpty(),
   check("rating", "ratingfield is required").notEmpty().isNumeric(),
 
   check("thumbnail", "thumbnail field is required").notEmpty(),
-  // check("thumbnail", "thumbnail.url field is required").contains("url"),
-  // check("thumbnail", "thumbnail.title is required").contains("title"),
 ];
 
 //* --------------------- EXPORTS --------------------- *\\
