@@ -15,16 +15,13 @@
     }
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=development&& npm run webpack:build && cd ./build && node index.js",
-    "build": "cross-env NODE_ENV=production&& npm run webpack:build && npm run docker:build",
-    "dev": "cd ./build&& cross-env NODE_ENV=development nodemon index.js",
-    "webpack:dev": "cross-env NODE_ENV=development webpack --watch",
-    "webpack:build": "webpack",
+    "build": "npm run lint&&gulp",
+    "deploy": "npm run build&&deploy.bat",
+    "dev": "gulp&&gulp watch",
     "lint": "eslint --fix --ext .ts src/",
-    "docker:build": "docker build . -t infotition/test",
-    "docker:start": "docker run -p 3000:3000 infotition/test",
-    "docker:start:node": "node index",
-    "docker:compose": "npm run webpack:build && docker-compose up --build"
+    "docker:build": "npm run build&&docker build ./dist/ -t infotition/books",
+    "docker:start": "docker run -p 3000:3000 infotition/books",
+    "docker:compose": "npm run build&&cd ./dist/&&docker-compose up --build"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -39,20 +36,22 @@
     "@types/express": "^4.17.12",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "@typescript-eslint/parser": "^4.28.0",
-    "clean-webpack-plugin": "^4.0.0-alpha.0",
-    "copy-webpack-plugin": "^9.0.0",
+    "del": "^6.0.0",
     "eslint": "^7.29.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-prettier": "^3.4.0",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-terser": "^2.0.1",
+    "gulp-typescript": "^6.0.0-alpha.1",
     "husky": "^6.0.0",
     "nodemon": "^2.0.7",
     "prettier": "^2.3.1",
+    "terser": "^5.8.0",
     "ts-loader": "^9.2.3",
-    "typescript": "^4.3.2",
-    "webpack": "^5.39.0",
-    "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.11.2"
+    "typescript": "^4.3.2"
   }
 }

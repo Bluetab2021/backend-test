@@ -1,13 +1,12 @@
 version: '3'
 services:
   app:
-    container_name: test-backend
+    container_name: books-backend
     build: .
     ports:
       - '3000:3000'
     external_links:
       - mongodb2
-    restart: always
   mongodb:
     container_name: mongodb2
     image: mongo
@@ -15,5 +14,3 @@ services:
       - '27017:27017'
     volumes:
       - ./data/db:/data/db
-    restart: always
-

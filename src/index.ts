@@ -18,18 +18,14 @@ dotenv.config({
 const PROTOCOL: string = process.env.PROTOCOL || "http";
 const HOST: string = process.env.HOST || "localhost";
 const PORT: string = process.env.PORT || "3000";
+const URI: string = process.env.DB_URI || "Test";
 
 const app: Application = express();
 
 //* --------------- DATABASE CONNECTION --------------- *\\
 
-const uri =
-  process.env.NODE_ENV === "production"
-    ? process.env.LOCAL_URI || ""
-    : process.env.ATLAS_URI || "";
-
 mongoose
-  .connect(uri, {
+  .connect(URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
